@@ -2,7 +2,7 @@ import { transactions } from "../dummyData/data.js"
 
 const trasactionResolver = {
     Query: {
-        transactions: async(_,_,context) => {
+        transactions: async(_,context) => {
             try {
                 if(!context.getUser()) throw new Error("Unauthorized")
 
@@ -15,7 +15,7 @@ const trasactionResolver = {
             }
         },
 
-        transaction: async(_,_,{transactionId}) => {
+        transaction: async(_,{transactionId}) => {
             try {
                 const transaction = await Transaction.findById(transactionId)
                 return transaction
