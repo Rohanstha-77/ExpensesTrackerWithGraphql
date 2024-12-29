@@ -2,7 +2,7 @@ import { transactions } from "../dummyData/data.js"
 
 const trasactionResolver = {
     Query: {
-        transactions: async(_,context) => {
+        transactions: async(_,__,context) => {
             try {
                 if(!context.getUser()) throw new Error("Unauthorized")
 
@@ -15,7 +15,7 @@ const trasactionResolver = {
             }
         },
 
-        transaction: async(_,{transactionId}) => {
+        transaction: async(_,__,{transactionId}) => {
             try {
                 const transaction = await Transaction.findById(transactionId)
                 return transaction
@@ -25,7 +25,7 @@ const trasactionResolver = {
             }
         }
     },
-    mutation:{
+    Mutation:{
         createTransaction: async(_,{input},context) => {
             try {
                 const newTransaction = new Transaction({
@@ -39,7 +39,7 @@ const trasactionResolver = {
                 throw new Error(error.message || "Internal server error")
             }
         },
-        updateTransaction: async(_,{input}) => {
+        updateTransaction: async(_,__,{input}) => {
             try {
                 const updatedTransaction = await Transaction.findById(input.transactionId,input,{new:true})
                 return updatedTransaction
@@ -48,7 +48,7 @@ const trasactionResolver = {
                 throw new Error(error.message || "Internal server error")
             }
         },
-        deleteTransaction: async(_,{transactionId}) => {
+        deleteTransaction: async(_,__,{transactionId}) => {
             try {
                 const deletedTransaction = await Transaction.findByIdAndDelete(transactionId)
                 return deletedTransaction

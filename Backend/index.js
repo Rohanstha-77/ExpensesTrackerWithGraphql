@@ -1,5 +1,4 @@
 import { ApolloServer } from "@apollo/server";
-import {startStandaloneServer} from "@apollo/server/standalone"
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import express from 'express';
@@ -53,9 +52,9 @@ const server = new ApolloServer({
 })
 await server.start();
 app.use(
-    '/',
+    '/graphql',
     cors({
-        origin: "http://localhost:3000",
+        origin: "http://localhost:5173",
         credentials: true
     }),
     express.json(),
@@ -69,4 +68,4 @@ await new Promise((resolve) =>
 );
 
 await connectDB()
-console.log(`🚀 Server ready at http://localhost:4000/`);
+console.log(`🚀 Server ready at http://localhost:4000/graphql`);
